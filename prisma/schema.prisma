@@ -21,7 +21,7 @@ model Restaurant {
   avatarImageUrl String
   coverImageUrl  String
   menuCategories MenuCategory[]
-  produts        Produt[]
+  produts        Product[]
   orders         Order[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
@@ -30,14 +30,14 @@ model Restaurant {
 model MenuCategory {
   id           String     @id @default(uuid())
   name         String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId String
-  products     Produt[]
+  products     Product[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }
 
-model Produt {
+model Product {
   id             String         @id @default(uuid())
   name           String
   description    String
@@ -45,9 +45,9 @@ model Produt {
   imageUrl       String
   ingridients    String[]
   orderproducts  OrderProduct[]
-  restaurant     Restaurant     @relation(fields: [restaurantId], references: [id])
+  restaurant     Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId   String
-  menuCategory   MenuCategory   @relation(fields: [menuCategoryId], references: [id])
+  menuCategory   MenuCategory   @relation(fields: [menuCategoryId], references: [id], onDelete: Cascade)
   menuCategoryId String
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
@@ -58,7 +58,7 @@ model Order {
   total             Float
   status            OrderStatus
   consumptionMethod ConsumptionMethod
-  restaurant        Restaurant        @relation(fields: [restarantId], references: [id])
+  restaurant        Restaurant        @relation(fields: [restarantId], references: [id], onDelete: Cascade)
   restarantId       String
   orderproducts     OrderProduct[]
   createdAt         DateTime          @default(now())
@@ -67,7 +67,7 @@ model Order {
 
 model OrderProduct {
   id        String   @id @default(uuid())
-  product   Produt   @relation(fields: [productId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id])
   productId String
   order     Order    @relation(fields: [orderId], references: [id])
   orderId   Int
