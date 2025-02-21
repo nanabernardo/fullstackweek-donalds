@@ -57,6 +57,7 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
               key={category.id}
               variant={getCatergoryButtonVariant(category)}
               size="sm"
+              className="rounded-full"
             >
               {category.name}
             </Button>
